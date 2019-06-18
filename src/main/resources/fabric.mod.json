@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "jmx-showcase",
+  "version": "${version}",
+
+  "name": "JMX Showcase",
+  "description": "Test / Demo Add-on for JMX",
+  "authors": [
+    "Grondag"
+  ],
+  "contact": {
+    "sources": "https://github.com/grondag/jmx-showcase",
+    "homepage": "https://github.com/grondag/jmx-showcase",
+    "issues": "https://github.com/grondag/jmx-showcase/issues"
+  },
+  "license": "Apache-2.0",
+  "icon": "assets/jmx/jmx_icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [ "grondag.jmx.Showcase" ],
+    "jmx": [ "grondag.jmx.ShowcaseClient" ]
+  },
+
+  "requires": {
+    "fabricloader": ">=0.4.8",
+    "fabric": "*"
+  }
+}
