@@ -1,7 +1,5 @@
 plugins {
 	id 'fabric-loom' version '0.2.4-SNAPSHOT'
-	//id 'java'
-	//id 'maven'
 	id 'maven-publish'
 }
 
@@ -24,7 +22,7 @@ ext.getVersionCode = { ->
 
 archivesBaseName = "jmx-showcase"
 group = "grondag"
-version = version = "0.1.0+alpha." + project.getVersionCode();
+version = version = "0.1.1+alpha." + project.getVersionCode();
 
 minecraft {
 }
@@ -104,29 +102,24 @@ sourceSets {
     }
 }
 
-def mcVersion = "1.14.2"
+def mcVersion = "1.14.3"
 
 dependencies {
 	minecraft "com.mojang:minecraft:$mcVersion"
-	mappings "net.fabricmc:yarn:$mcVersion+build.7"
+	mappings "net.fabricmc:yarn:$mcVersion+build.1"
     modImplementation "net.fabricmc:fabric-loader:0.4.8+build.155"
-    modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0+build.185"
+    modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0+build.187"
 	
-	modImplementation "grondag:canvas:0.7.1+alpha.+"
+	//modImplementation "grondag:canvas:0.7.1+alpha.+"
 
-    modImplementation "grondag:jmx:0.2+"
-    include "grondag:jmx:0.2+"
+    modImplementation "grondag:jmx:0.2.2+alpha.43"
 	
 	// For dev env testing 
-	modImplementation "com.jamieswhiteshirt:developer-mode:1.0.11"
-	modImplementation "io.github.prospector.modmenu:ModMenu:1.6.2-92"
-	
-    //modImplementation "cloth-config:ClothConfig:0.2.1.14"
-    // included now in fermion
-    // include "cloth-config:ClothConfig:0.2.1.14"
-    
-	//modCompile "cloth:ClothEvents:0.3.1.23" // for REI
-	modCompile "me.shedaniel:RoughlyEnoughItems:2.9.4+build.128"
+	modRuntime "com.jamieswhiteshirt:developer-mode:1.0.11"
+	modRuntime "io.github.prospector.modmenu:ModMenu:1.6.2-92"
+	//modRuntime "grondag:fermion:0.6.3+build.33"
+	//modRuntime "grondag:frex:0.7.3+build.71"
+	//modRuntime "cloth-config:ClothConfig2:0.2.0"
 	
 	// dev env annotation support
 	compile "org.apiguardian:apiguardian-api:1.0.0"
