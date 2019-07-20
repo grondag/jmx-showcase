@@ -1,0 +1,22 @@
+{
+    "parent": "jmx:block/jmx_cube_all",
+    "textures": {
+        "all": "jmx:block/test_full"
+    },
+    "jmx": {
+	    "textures": {
+	    	"jmx_tex_particle": "jmx:block/test_full",
+	        "jmx_tex_all0": "jmx:block/test_solid",
+	        "jmx_tex_all1": "jmx:block/test_translucent"
+	    },
+	    "materials": {
+	    	"jmx_mat_all": {
+	    		"layer0": "cutout_mipped",
+	    		"layer1": "translucent",
+	    		"emissive1": true,
+	    		"ambient_occlusion1": false,
+	    		"diffuse1": false
+	    	}
+	    }
+    }
+}

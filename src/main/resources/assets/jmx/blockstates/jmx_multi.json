@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "jmx:block/jmx_multi" }
+    }
+}

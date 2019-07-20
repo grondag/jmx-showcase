@@ -112,7 +112,8 @@ dependencies {
 	
 	//modImplementation "grondag:canvas:0.7.1+alpha.+"
 
-    modImplementation "grondag:jmx:0.2.2+alpha.43"
+    modImplementation "grondag:jmx:0.2.4+"
+	imclude "grondag:jmx:0.2.4+"
 	
 	// For dev env testing 
 	modRuntime "com.jamieswhiteshirt:developer-mode:1.0.11"

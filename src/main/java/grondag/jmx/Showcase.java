@@ -5,6 +5,7 @@ import java.util.function.Function;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.Material;
@@ -116,6 +117,24 @@ public class Showcase implements ModInitializer {
     
     @Override
     public void onInitialize() {
+        Block multiBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(1, 1).build()) {
+            @Override
+            public BlockRenderLayer getRenderLayer() {
+                return BlockRenderLayer.CUTOUT;
+            }
+        };
+        
+        register(multiBlock, "jmx_multi", ITEM_FUNCTION_STANDARD);
+            
+        multiBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(1, 1).build()) {
+            @Override
+            public BlockRenderLayer getRenderLayer() {
+                return BlockRenderLayer.CUTOUT;
+            }
+        };
+        
+        register(multiBlock, "jmx_multi2", ITEM_FUNCTION_STANDARD);
+        
         for(String target : TARGETS) {
             register(new SlabBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1).build()), target + "_slab", ITEM_FUNCTION_STANDARD);
             register(new FenceBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1).build()), target + "_fence", ITEM_FUNCTION_STANDARD);

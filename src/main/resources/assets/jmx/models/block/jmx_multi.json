@@ -1,0 +1,23 @@
+{
+    "parent": "jmx:block/jmx_orientable",
+    "textures": {
+        "top": "minecraft:block/oak_leaves",
+        "front": "minecraft:block/magenta_stained_glass",
+        "side": "minecraft:block/scaffolding_side"
+    },
+    "jmx": {
+        "textures": {
+	        "jmx_tex_top0": "minecraft:block/oak_leaves",
+	        "jmx_tex_front0": "minecraft:block/magenta_stained_glass",
+	        "jmx_tex_side0": "minecraft:block/scaffolding_side",
+	        "jmx_tex_top1": null,
+	        "jmx_tex_front1": null,
+	        "jmx_tex_side1": null
+    	},
+        "materials": {
+	        "jmx_mat_top": { "layer0": "translucent" },
+	        "jmx_mat_front": { "layer0": "cutout" },
+	        "jmx_mat_all": { "layer0": "cutout_mipped" }
+        }
+    }
+}
