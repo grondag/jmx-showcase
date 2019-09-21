@@ -1,40 +1,35 @@
 plugins {
-	id 'fabric-loom' version '0.2.4-SNAPSHOT'
+	id 'fabric-loom' version '0.2.5-SNAPSHOT'
 	id 'maven-publish'
+	id "org.ajoberstar.grgit" version "3.1.1"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-ext.getVersionCode = { ->
-    try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'rev-list', '--first-parent', '--count', 'origin/master'
-            standardOutput = stdout
-        }
-        return Integer.parseInt(stdout.toString().trim())
-    }
-    catch (ignored) {
-        return -1;
-    }
-}
-
 archivesBaseName = "jmx-showcase"
 group = "grondag"
-version = version = "0.1.1+alpha." + project.getVersionCode();
+def version_tag = 'jmx_showcase_version'
+
+if (grgit == null) {
+	version = '99.0.0-nogit'
+} else if (project.hasProperty(version_tag)) {
+	if(grgit.status().isClean()) {
+		version = project.getProperty(version_tag) + '.' + grgit.log().size() + '+' + project.minecraft_version
+	} else {
+		version = project.getProperty(version_tag) + '.' + (grgit.log().size() + 1) + '-snapshot+' + project.minecraft_version
+	}
+} else {
+	version = '99.0.0-local'
+}
 
 minecraft {
 }
 
 repositories {
-	//mavenLocal()
-    //flatDir {
-    //    dirs '../fabric/build/libs'
-    //}
-    
-    maven { url "https://tehnut.info/maven"}
-    maven { url "http://maven.sargunv.s3-website-us-west-2.amazonaws.com/" }
+	mavenLocal()
+    //maven { url "https://tehnut.info/maven"}
+    //maven { url "http://maven.sargunv.s3-website-us-west-2.amazonaws.com/" }
     maven { url "https://minecraft.curseforge.com/api/maven" }
     maven { url "https://maven.fabricmc.net/io/github/prospector/modmenu/ModMenu/" }
     maven { url "https://maven.jamieswhiteshirt.com/libs-release/"}
@@ -102,43 +97,33 @@ sourceSets {
     }
 }
 
-def mcVersion = "1.14.3"
-
 dependencies {
-	minecraft "com.mojang:minecraft:$mcVersion"
-	mappings "net.fabricmc:yarn:$mcVersion+build.1"
-    modImplementation "net.fabricmc:fabric-loader:0.4.8+build.155"
-    modCompile "net.fabricmc.fabric-api:fabric-api:0.3.0+build.187"
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
+	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
-	//modImplementation "grondag:canvas:0.7.1+alpha.+"
-
-    modImplementation "grondag:jmx:0.2.4+"
-	imclude "grondag:jmx:0.2.4+"
-	
-	// For dev env testing 
-	modRuntime "com.jamieswhiteshirt:developer-mode:1.0.11"
-	modRuntime "io.github.prospector.modmenu:ModMenu:1.6.2-92"
-	//modRuntime "grondag:fermion:0.6.3+build.33"
-	//modRuntime "grondag:frex:0.7.3+build.71"
-	//modRuntime "cloth-config:ClothConfig2:0.2.0"
-	
+	modImplementation ("grondag:jmx:${project.jmx_version}.+") {
+        exclude group :"net.fabricmc.fabric-api"
+    }
+    include "grondag:jmx:${project.jmx_version}.+"
+    
 	// dev env annotation support
 	compile "org.apiguardian:apiguardian-api:1.0.0"
 	compile "com.google.code.findbugs:jsr305:3.0.2"
-	
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-			artifact(jar.archivePath) {
-	    		builtBy remapJar
+	publications {
+		mavenJava(MavenPublication) {
+			artifact(remapJar) {
+				builtBy remapJar
 			}
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
-        }
-    }
+		}
+	}
 
     repositories {
         maven {
