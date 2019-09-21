@@ -23,7 +23,8 @@
   },
 
   "requires": {
-    "fabricloader": ">=0.4.8",
+    "fabricloader": ">=0.6.2",
+    "minecraft": "~1.15-alpha.19.38.b",
     "fabric": "*"
   }
 }
