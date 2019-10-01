@@ -120,11 +120,11 @@ public class Showcase implements ModInitializer {
     public void onInitialize() {
         Block multiBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(1, 1).build());
         register(multiBlock, "jmx_multi", ITEM_FUNCTION_STANDARD);
-        BlockRenderLayerMap.INSTANCE.putBlock(multiBlock, BlockRenderLayer.field_9174);
+        BlockRenderLayerMap.INSTANCE.putBlock(multiBlock, BlockRenderLayer.CUTOUT);
         
         multiBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(1, 1).build());
         register(multiBlock, "jmx_multi2", ITEM_FUNCTION_STANDARD);
-        BlockRenderLayerMap.INSTANCE.putBlock(multiBlock, BlockRenderLayer.field_9174);
+        BlockRenderLayerMap.INSTANCE.putBlock(multiBlock, BlockRenderLayer.CUTOUT);
         
         for(String target : TARGETS) {
             register(new SlabBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1).build()), target + "_slab", ITEM_FUNCTION_STANDARD);
