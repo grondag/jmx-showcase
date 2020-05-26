@@ -2,21 +2,20 @@ package grondag.jmx;
 
 import java.util.function.Function;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.Material;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class Showcase implements ModInitializer {
 
@@ -110,26 +109,24 @@ public class Showcase implements ModInitializer {
 
 	public static Item register(Block block, String name, Function<Block, Item> itemFunc) {
 		final Identifier id = new Identifier("jmx", name);
-		Registry.BLOCK.add(id, block);
+		Registry.register(Registry.BLOCK, id, block);
 		final Item result = itemFunc.apply(block);
-		Registry.ITEM.add(id, result);
+		Registry.register(Registry.ITEM, id, result);
 		return result;
 	}
 
+	public static final Block MULTIBLOCK_1 = new Block(FabricBlockSettings.of(Material.STONE).strength(1, 1));
+	public static final Block MULTIBLOCK_2 = new Block(FabricBlockSettings.of(Material.STONE).strength(1, 1));
+
 	@Override
 	public void onInitialize() {
-		Block multiBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(1, 1).build());
-		register(multiBlock, "jmx_multi", ITEM_FUNCTION_STANDARD);
-		BlockRenderLayerMap.INSTANCE.putBlock(multiBlock, RenderLayer.getCutout());
-
-		multiBlock = new Block(FabricBlockSettings.of(Material.STONE).strength(1, 1).build());
-		register(multiBlock, "jmx_multi2", ITEM_FUNCTION_STANDARD);
-		BlockRenderLayerMap.INSTANCE.putBlock(multiBlock, RenderLayer.getCutout());
+		register(MULTIBLOCK_1, "jmx_multi", ITEM_FUNCTION_STANDARD);
+		register(MULTIBLOCK_2, "jmx_multi2", ITEM_FUNCTION_STANDARD);
 
 		for(final String target : TARGETS) {
-			register(new SlabBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1).build()), target + "_slab", ITEM_FUNCTION_STANDARD);
-			register(new FenceBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1).build()), target + "_fence", ITEM_FUNCTION_STANDARD);
-			register(new StairsBlock(Blocks.COBBLESTONE.getDefaultState(), FabricBlockSettings.of(Material.STONE).strength(1, 1).build()) {}, target + "_stairs", ITEM_FUNCTION_STANDARD);
+			register(new SlabBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1)), target + "_slab", ITEM_FUNCTION_STANDARD);
+			register(new FenceBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1)), target + "_fence", ITEM_FUNCTION_STANDARD);
+			register(new StairsBlock(Blocks.COBBLESTONE.getDefaultState(), FabricBlockSettings.of(Material.STONE).strength(1, 1)) {}, target + "_stairs", ITEM_FUNCTION_STANDARD);
 		}
 	}
 }
