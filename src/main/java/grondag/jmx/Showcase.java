@@ -1,21 +1,19 @@
 package grondag.jmx;
 
 import java.util.function.Function;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FenceBlock;
-import net.minecraft.block.Material;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.material.Material;
 
 public class Showcase implements ModInitializer {
 
@@ -101,14 +99,14 @@ public class Showcase implements ModInitializer {
 			"iron_ore",
 	"jack_o_lantern"};
 	public static final Function<Block, Item> ITEM_FUNCTION_STANDARD = block -> {
-		return new BlockItem(block, new Item.Settings()
-				.maxCount(64)
-				.group(ItemGroup.BUILDING_BLOCKS));
+		return new BlockItem(block, new Item.Properties()
+				.stacksTo(64)
+				.tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
 	};
 
 
 	public static Item register(Block block, String name, Function<Block, Item> itemFunc) {
-		final Identifier id = new Identifier("jmx", name);
+		final ResourceLocation id = new ResourceLocation("jmx", name);
 		Registry.register(Registry.BLOCK, id, block);
 		final Item result = itemFunc.apply(block);
 		Registry.register(Registry.ITEM, id, result);
@@ -126,7 +124,7 @@ public class Showcase implements ModInitializer {
 		for(final String target : TARGETS) {
 			register(new SlabBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1)), target + "_slab", ITEM_FUNCTION_STANDARD);
 			register(new FenceBlock(FabricBlockSettings.of(Material.STONE).strength(1, 1)), target + "_fence", ITEM_FUNCTION_STANDARD);
-			register(new StairsBlock(Blocks.COBBLESTONE.getDefaultState(), FabricBlockSettings.of(Material.STONE).strength(1, 1)) {}, target + "_stairs", ITEM_FUNCTION_STANDARD);
+			register(new StairBlock(Blocks.COBBLESTONE.defaultBlockState(), FabricBlockSettings.of(Material.STONE).strength(1, 1)) {}, target + "_stairs", ITEM_FUNCTION_STANDARD);
 		}
 	}
 }

@@ -1,9 +1,7 @@
 package grondag.jmx;
 
-import net.minecraft.client.render.RenderLayer;
-
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-
+import net.minecraft.client.renderer.RenderType;
 import grondag.jmx.api.JmxInitializer;
 import grondag.jmx.api.RetexturedModelBuilder;
 
@@ -11,8 +9,8 @@ public class ShowcaseClient implements JmxInitializer {
 	@Override
 	public void onInitalizeJmx() {
 		for(final String target : Showcase.TARGETS) {
-			BlockRenderLayerMap.INSTANCE.putBlock(Showcase.MULTIBLOCK_1, RenderLayer.getCutout());
-			BlockRenderLayerMap.INSTANCE.putBlock(Showcase.MULTIBLOCK_2, RenderLayer.getCutout());
+			BlockRenderLayerMap.INSTANCE.putBlock(Showcase.MULTIBLOCK_1, RenderType.cutout());
+			BlockRenderLayerMap.INSTANCE.putBlock(Showcase.MULTIBLOCK_2, RenderType.cutout());
 
 			RetexturedModelBuilder.builder("minecraft:stone_slab", "jmx:" + target + "_slab")
 			.mapSprite("minecraft:block/stone", "minecraft:block/" + target).completeBlockWithItem();
